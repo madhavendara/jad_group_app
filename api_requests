@@ -1,0 +1,59 @@
+   useEffect(() => {
+        const apiUrl = 'https://jadgroup.goaspendigital.com/wp-json/custom/v1/retrieve-zoho-data/';
+        const username = 'jadgroup'; 
+        const applicationPassword = 'UsjV 9aLE 42Xw b7vW dJ02 yBWa'; 
+    
+        const headers = new Headers();
+        headers.append('Authorization', `Basic ${btoa(`${username}:${applicationPassword}`)}`);
+        headers.append('Content-Type', 'application/json');
+    
+        fetch(apiUrl, {
+          method: 'GET', 
+          headers: headers,
+        })
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log('Data from API:', data);
+          })
+          .catch(error => {
+            console.error('Error fetching data:', error);
+          });
+      }, []); 
+
+
+      // normal
+
+      useEffect(() => {
+        const fetchData = async () => {
+          const apiUrl = 'https://sandbox.zohoapis.com/crm/v2/functions/Retrieve_list/actions/execute?auth_type=apikey&zapikey=key';
+          const requestData = {
+            page: '1', 
+          };
+    
+          try {
+            const response = await fetch(apiUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(requestData),
+            });
+    
+            if (!response.ok) {
+              throw new Error(`Error: ${response.statusText}`);
+            }
+    
+            const data = await response.json();
+            console.log('Success:', data);
+          } catch (error) {
+            console.error('Error:', error.message);
+          }
+        };
+    
+        fetchData();
+      }, []); 
